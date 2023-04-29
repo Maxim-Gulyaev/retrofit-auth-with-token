@@ -1,7 +1,7 @@
-package android.maxim.retrofitauthtoken;
+package android.maxim.retrofitauthtoken.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.maxim.retrofitauthtoken.R;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
