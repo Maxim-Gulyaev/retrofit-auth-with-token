@@ -68,4 +68,12 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hilt_version")
     annotationProcessor("com.google.dagger:hilt-android-compiler:$hilt_version")
 
+    //rxjava
+    def rxjava_version = "3.1.6"
+    def rxandroid_version = "3.0.2"
+    def rx_retrofit_adapter_version = "2.9.0"
+    implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
+    implementation "io.reactivex.rxjava3:rxandroid:$rxandroid_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$rx_retrofit_adapter_version"
+
 }
