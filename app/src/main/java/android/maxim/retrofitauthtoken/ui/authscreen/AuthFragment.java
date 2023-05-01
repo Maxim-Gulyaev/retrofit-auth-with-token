@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.squareup.picasso.Picasso;
@@ -27,6 +29,7 @@ public class AuthFragment extends Fragment {
     private FragmentAuthBinding binding;
     @Inject
     Api api;
+    private AuthViewModel authViewModel;
 
     @Override
     public View onCreateView(
@@ -34,6 +37,7 @@ public class AuthFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
+        authViewModel = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
         binding = FragmentAuthBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
@@ -53,40 +57,33 @@ public class AuthFragment extends Fragment {
         binding.btnEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                auth(
-                        new AuthData(
-                                //TODO Refactor hardcode
-                                /*binding.tvUsername.getText().toString(),
-                                binding.tvFirstName.getText().toString()*/
-                                "rshawe2",
-                                "OWsTbMUgFc"
-                        )
+                authViewModel.auth("rshawe2",
+                        "OWsTbMUgFc"
+                        /*binding.tvUsername.getText().toString(),
+                        binding.tvFirstName.getText().toString()*/
                 );
+                showUserData();
+                turnOnButtonNext();
             }
         });
+    }
+
+    private void showUserData() {
+        authViewModel.mutableLiveDataUser.observe(this, user -> {
+            binding.tvFirstName.setText(user.firstName);
+            binding.tvLastName.setText(user.lastName);
+            Picasso.get().load(user.image).into(binding.ivAvatar);
+        });
+    }
+
+    private void turnOnButtonNext() {
+        binding.btnNext.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    //TODO Move auth method in viewModel
-    //TODO Handle the error in auth
-    private void auth(AuthData authData) {
-        api.auth(authData)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        user -> {
-                            binding.tvFirstName.setText(user.firstName);
-                            binding.tvLastName.setText(user.lastName);
-                            Picasso.get().load(user.image).into(binding.ivAvatar);
-                            binding.btnNext.setVisibility(View.VISIBLE);
-                        },
-                        user -> {}
-                );
     }
 
 }
