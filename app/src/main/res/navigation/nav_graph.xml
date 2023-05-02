@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/ProductsFragment"
-        android:name="android.maxim.retrofitauthtoken.ui.prodictsscreen.ProductsFragment"
+        android:name="android.maxim.retrofitauthtoken.ui.productsscreen.ProductsFragment"
         tools:layout="@layout/fragment_products">
     </fragment>
 </navigation>

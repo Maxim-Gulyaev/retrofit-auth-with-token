@@ -3,25 +3,18 @@ package android.maxim.retrofitauthtoken.ui.authscreen;
 import android.maxim.retrofitauthtoken.R;
 import android.maxim.retrofitauthtoken.databinding.FragmentAuthBinding;
 import android.maxim.retrofitauthtoken.model.Api;
-import android.maxim.retrofitauthtoken.model.AuthData;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-
 import com.squareup.picasso.Picasso;
-
 import javax.inject.Inject;
-
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Scheduler;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @AndroidEntryPoint
 public class AuthFragment extends Fragment {
@@ -54,6 +47,8 @@ public class AuthFragment extends Fragment {
             }
         });
 
+
+        //TODO Delete hardcode
         binding.btnEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,11 +63,17 @@ public class AuthFragment extends Fragment {
         });
     }
 
+    //TODO Rid this recursion
     private void showUserData() {
         authViewModel.mutableLiveDataUser.observe(this, user -> {
-            binding.tvFirstName.setText(user.firstName);
-            binding.tvLastName.setText(user.lastName);
-            Picasso.get().load(user.image).into(binding.ivAvatar);
+            if(user != null) {
+                Log.d("karamba", "AuthFragment.showUserData()");
+                binding.tvFirstName.setText(user.firstName);
+                binding.tvLastName.setText(user.lastName);
+                Picasso.get().load(user.image).into(binding.ivAvatar);
+            } else {
+                showUserData();
+            }
         });
     }
 

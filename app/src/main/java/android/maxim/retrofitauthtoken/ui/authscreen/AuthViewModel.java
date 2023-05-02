@@ -23,7 +23,7 @@ public class AuthViewModel extends ViewModel {
     AuthViewModel() {}
 
     @Inject
-    MutableLiveData<String> token;
+    public MutableLiveData<String> token;
     MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
     @Inject
     Api api;
@@ -32,12 +32,14 @@ public class AuthViewModel extends ViewModel {
     void auth(String username, String password) {
 
         AuthData authData = new AuthData(username, password);
+
         api.auth(authData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         user -> {
                             mutableLiveDataUser.setValue(user);
+                            token.setValue(user.token);
                         },
                         user -> {}
                 );
