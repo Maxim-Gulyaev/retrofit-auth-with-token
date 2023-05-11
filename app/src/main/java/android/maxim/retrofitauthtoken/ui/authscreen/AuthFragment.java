@@ -20,9 +20,9 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class AuthFragment extends Fragment {
 
     private FragmentAuthBinding binding;
+    private AuthViewModel authViewModel;
     @Inject
     Api api;
-    private AuthViewModel authViewModel;
 
     @Override
     public View onCreateView(
@@ -46,8 +46,8 @@ public class AuthFragment extends Fragment {
 
         //TODO Delete hardcode
         binding.btnEnter.setOnClickListener(v -> {
-            authViewModel.auth("rshawe2",
-                    "OWsTbMUgFc"
+            authViewModel.auth("dpettegre6",
+                    "YVmhktgYVS"
                     /*binding.tvUsername.getText().toString(),
                     binding.tvFirstName.getText().toString()*/
             );
@@ -56,17 +56,12 @@ public class AuthFragment extends Fragment {
         });
     }
 
-    //TODO Rid this recursion
     private void showUserData() {
         authViewModel.mutableLiveDataUser.observe(getViewLifecycleOwner(), user -> {
-            if(user != null) {
-                Log.d("karamba", "AuthFragment.showUserData()");
-                binding.tvFirstName.setText(user.firstName);
-                binding.tvLastName.setText(user.lastName);
-                Picasso.get().load(user.image).into(binding.ivAvatar);
-            } else {
-                showUserData();
-            }
+            Log.d("karamba", "AuthFragment.showUserData()");
+            binding.tvFirstName.setText(user.firstName);
+            binding.tvLastName.setText(user.lastName);
+            Picasso.get().load(user.image).into(binding.ivAvatar);
         });
     }
 
