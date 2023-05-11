@@ -4,7 +4,6 @@ import android.maxim.retrofitauthtoken.R;
 import android.maxim.retrofitauthtoken.databinding.FragmentAuthBinding;
 import android.maxim.retrofitauthtoken.model.Api;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +57,6 @@ public class AuthFragment extends Fragment {
 
     private void showUserData() {
         authViewModel.mutableLiveDataUser.observe(getViewLifecycleOwner(), user -> {
-            Log.d("karamba", "AuthFragment.showUserData()");
             binding.tvFirstName.setText(user.firstName);
             binding.tvLastName.setText(user.lastName);
             Picasso.get().load(user.image).into(binding.ivAvatar);
