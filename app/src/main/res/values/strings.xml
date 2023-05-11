@@ -7,6 +7,7 @@
     <string name="enter">enter</string>
     <string name="users_avatar">users avatar</string>
     <string name="quit">quit</string>
+    <string name="fill_credentials">Fill credentials</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
