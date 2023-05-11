@@ -1,10 +1,7 @@
 package android.maxim.retrofitauthtoken.di;
 
-
 import android.maxim.retrofitauthtoken.model.Api;
-
 import androidx.lifecycle.MutableLiveData;
-
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;

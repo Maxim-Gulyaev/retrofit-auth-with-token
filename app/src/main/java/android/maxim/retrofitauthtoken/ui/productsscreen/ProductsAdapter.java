@@ -24,8 +24,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
     @Override
     public ProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.recycler_item, parent, false);
-        ProductsViewHolder productsViewHolder = new ProductsViewHolder(view);
-        return productsViewHolder;
+        return new ProductsViewHolder(view);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
         return productsList.size();
     }
 
-    public class ProductsViewHolder extends RecyclerView.ViewHolder {
+    public static class ProductsViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView description;
 

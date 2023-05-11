@@ -26,7 +26,7 @@ public class AuthFragment extends Fragment {
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
 
@@ -39,33 +39,27 @@ public class AuthFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(AuthFragment.this)
-                        .navigate(R.id.action_AuthFragment_to_ProductsFragment);
-            }
-        });
+        binding.btnNext.setOnClickListener(
+                view1 -> NavHostFragment.findNavController(AuthFragment.this)
+                .navigate(R.id.action_AuthFragment_to_ProductsFragment));
 
 
         //TODO Delete hardcode
-        binding.btnEnter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                authViewModel.auth("rshawe2",
-                        "OWsTbMUgFc"
-                        /*binding.tvUsername.getText().toString(),
-                        binding.tvFirstName.getText().toString()*/
-                );
-                showUserData();
-                turnOnButtonNext();
-            }
+        binding.btnEnter.setOnClickListener(v -> {
+            authViewModel.auth("rshawe2",
+                    "OWsTbMUgFc"
+                    /*binding.tvUsername.getText().toString(),
+                    binding.tvFirstName.getText().toString()*/
+            );
+            showUserData();
+            turnOnButtonNext();
         });
     }
 
+    //TODO Dispose rx
     //TODO Rid this recursion
     private void showUserData() {
-        authViewModel.mutableLiveDataUser.observe(this, user -> {
+        authViewModel.mutableLiveDataUser.observe(getViewLifecycleOwner(), user -> {
             if(user != null) {
                 Log.d("karamba", "AuthFragment.showUserData()");
                 binding.tvFirstName.setText(user.firstName);
@@ -86,5 +80,4 @@ public class AuthFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 }

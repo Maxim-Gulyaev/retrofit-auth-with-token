@@ -2,10 +2,8 @@ package android.maxim.retrofitauthtoken.ui.productsscreen;
 
 import android.maxim.retrofitauthtoken.databinding.FragmentProductsBinding;
 import android.maxim.retrofitauthtoken.model.Api;
-import android.maxim.retrofitauthtoken.model.Products;
 import android.maxim.retrofitauthtoken.ui.authscreen.AuthViewModel;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,17 +24,16 @@ public class ProductsFragment extends Fragment {
     private AuthViewModel authViewModel;
     @Inject
     Api api;
-    Products products;
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
         authViewModel = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
         binding = FragmentProductsBinding.inflate(inflater, container, false);
 
-        getProducts();
+        initRecycler();
 
         return binding.getRoot();
     }
@@ -51,20 +48,15 @@ public class ProductsFragment extends Fragment {
         binding = null;
     }
 
-    private void getProducts() {
-        Log.d("karamba", "ProductsFragment.getProducts()");
+    private void initRecycler() {
         authViewModel.token.observe(getViewLifecycleOwner(), token -> {
             Single.just(token)
                     .subscribeOn(Schedulers.io())
-                    .doOnSuccess(it -> {
-                        Log.d("karamba", "ProductsFragment.getProducts().doOnSuccess");
-                        products = api.getProducts(token);
-                    })
+                    .flatMap(it -> api.getProducts(token))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(it -> {
-                        Log.d("karamba", "ProductsFragment.getProducts().subscribe");
-                        binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
-                        binding.recyclerView.setAdapter(new ProductsAdapter(products.products, getContext()));
+                        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        binding.recyclerView.setAdapter(new ProductsAdapter(it.products, getContext()));
                     });
         });
     }

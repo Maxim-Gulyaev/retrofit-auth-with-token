@@ -1,7 +1,6 @@
 package android.maxim.retrofitauthtoken.model;
 
 import io.reactivex.rxjava3.core.Single;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -13,6 +12,6 @@ public interface Api {
     Single<User> auth(@Body AuthData authData);
 
     @GET("auth/products")
-    Products getProducts(@Header("Authorization") String token);
+    Single<Products> getProducts(@Header("Authorization") String token);
 
 }
