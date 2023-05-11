@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @AndroidEntryPoint
@@ -22,6 +23,7 @@ public class ProductsFragment extends Fragment {
 
     private FragmentProductsBinding binding;
     private AuthViewModel authViewModel;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
     @Inject
     Api api;
 
@@ -50,14 +52,22 @@ public class ProductsFragment extends Fragment {
 
     private void initRecycler() {
         authViewModel.token.observe(getViewLifecycleOwner(), token -> {
-            Single.just(token)
-                    .subscribeOn(Schedulers.io())
-                    .flatMap(it -> api.getProducts(token))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(it -> {
-                        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        binding.recyclerView.setAdapter(new ProductsAdapter(it.products, getContext()));
-                    });
+            compositeDisposable.add(
+                    Single.just(token)
+                            .subscribeOn(Schedulers.io())
+                            .flatMap(it -> api.getProducts(token))
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(it -> {
+                                binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                binding.recyclerView.setAdapter(new ProductsAdapter(it.products, getContext()));
+                            })
+            );
         });
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        compositeDisposable.dispose();
     }
 }
