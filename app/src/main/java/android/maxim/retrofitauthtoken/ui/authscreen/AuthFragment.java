@@ -56,7 +56,6 @@ public class AuthFragment extends Fragment {
         });
     }
 
-    //TODO Dispose rx
     //TODO Rid this recursion
     private void showUserData() {
         authViewModel.mutableLiveDataUser.observe(getViewLifecycleOwner(), user -> {
