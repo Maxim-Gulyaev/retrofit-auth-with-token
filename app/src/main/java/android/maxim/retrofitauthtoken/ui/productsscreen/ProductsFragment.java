@@ -23,7 +23,8 @@ public class ProductsFragment extends Fragment {
 
     private FragmentProductsBinding binding;
     private AuthViewModel authViewModel;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    @Inject
+    CompositeDisposable compositeDisposable;
     @Inject
     Api api;
 
