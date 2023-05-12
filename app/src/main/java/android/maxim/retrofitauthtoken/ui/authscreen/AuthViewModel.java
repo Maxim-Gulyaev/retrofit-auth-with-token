@@ -3,6 +3,7 @@ package android.maxim.retrofitauthtoken.ui.authscreen;
 import android.maxim.retrofitauthtoken.model.Api;
 import android.maxim.retrofitauthtoken.model.AuthData;
 import android.maxim.retrofitauthtoken.model.User;
+import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import javax.inject.Inject;
@@ -19,13 +20,14 @@ public class AuthViewModel extends ViewModel {
 
     @Inject
     public MutableLiveData<String> token;
-    MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
     @Inject
     CompositeDisposable compositeDisposable;
     @Inject
     Api api;
+    MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
+    MutableLiveData<String> mutableLiveDataError = new MutableLiveData<>();
+    private static final String TAG = "ERROR";
 
-    //TODO Handle the error in auth
     void auth(String username, String password) {
 
         AuthData authData = new AuthData(username, password);
@@ -39,7 +41,10 @@ public class AuthViewModel extends ViewModel {
                                     mutableLiveDataUser.setValue(user);
                                     token.setValue(user.token);
                                 },
-                                user -> {}
+                                error -> {
+                                    Log.e(TAG, error.getMessage());
+                                    mutableLiveDataError.setValue(error.getMessage());
+                                }
                         )
         );
     }

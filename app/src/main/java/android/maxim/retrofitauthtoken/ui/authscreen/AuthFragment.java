@@ -56,6 +56,8 @@ public class AuthFragment extends Fragment {
                         .show();
             }
         });
+
+        showError();
     }
 
     private void showUserData() {
@@ -63,6 +65,13 @@ public class AuthFragment extends Fragment {
             binding.tvFirstName.setText(user.firstName);
             binding.tvLastName.setText(user.lastName);
             Picasso.get().load(user.image).into(binding.ivAvatar);
+        });
+    }
+
+    private void showError() {
+        authViewModel.mutableLiveDataError.observe(getViewLifecycleOwner(), error -> {
+            Toast.makeText(getContext(), error, Toast.LENGTH_LONG)
+                    .show();
         });
     }
 
