@@ -1,6 +1,7 @@
 package android.maxim.retrofitauthtoken.di;
 
 import android.maxim.retrofitauthtoken.model.Api;
+import android.maxim.retrofitauthtoken.model.User;
 import androidx.lifecycle.MutableLiveData;
 import javax.inject.Singleton;
 import dagger.Module;
@@ -20,8 +21,28 @@ public class AppModule {
 
     @Provides
     @Singleton
-    MutableLiveData<String> provideMutableLiveData() {
+    @TokenQualifier
+    MutableLiveData<String> provideMutableLiveDataToken() {
         return new MutableLiveData<>();
+    }
+
+    @Provides
+    @Singleton
+    @ErrorQualifier
+    MutableLiveData<String> provideMutableLiveDataError() {
+        return new MutableLiveData<>();
+    }
+
+    @Provides
+    @Singleton
+    MutableLiveData<User> provideMutableLiveDataUser() {
+        return new MutableLiveData<>();
+    }
+
+    @Provides
+    @Singleton
+    CompositeDisposable provideCompositeDisposable() {
+        return new CompositeDisposable();
     }
 
     @Provides
@@ -43,12 +64,6 @@ public class AppModule {
                 .build();
 
         return retrofit.create(Api.class);
-    }
-
-    @Provides
-    @Singleton
-    CompositeDisposable provideCompositeDisposable() {
-        return new CompositeDisposable();
     }
 
 }
