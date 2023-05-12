@@ -43,7 +43,8 @@ public class ProductsFragment extends Fragment {
     }
 
     private void initRecycler() {
-        authViewModel.token.observe(getViewLifecycleOwner(), token -> compositeDisposable.add(
+        authViewModel.token.observe(getViewLifecycleOwner(), token ->
+                compositeDisposable.add(
                 Single.just(token)
                         .subscribeOn(Schedulers.io())
                         .flatMap(it -> api.getProducts(token))

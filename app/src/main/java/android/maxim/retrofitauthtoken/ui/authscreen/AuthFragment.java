@@ -31,6 +31,9 @@ public class AuthFragment extends Fragment {
     ) {
         authViewModel = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
         binding = FragmentAuthBinding.inflate(inflater, container, false);
+
+        showUserData();
+
         return binding.getRoot();
     }
 
