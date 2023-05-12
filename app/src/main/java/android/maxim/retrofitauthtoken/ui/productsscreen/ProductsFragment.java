@@ -42,10 +42,6 @@ public class ProductsFragment extends Fragment {
         return binding.getRoot();
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
     private void initRecycler() {
         authViewModel.token.observe(getViewLifecycleOwner(), token -> compositeDisposable.add(
                 Single.just(token)

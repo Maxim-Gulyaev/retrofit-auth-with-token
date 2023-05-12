@@ -48,7 +48,6 @@ public class AppModule {
     @Provides
     @Singleton
     Api provideApi() {
-
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
 

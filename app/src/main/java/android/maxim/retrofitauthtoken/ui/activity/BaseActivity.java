@@ -14,6 +14,5 @@ public class BaseActivity extends AppCompatActivity {
         android.maxim.retrofitauthtoken.databinding.ContentBaseBinding binding
                 = ContentBaseBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
     }
 }

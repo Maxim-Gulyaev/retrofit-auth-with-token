@@ -45,9 +45,7 @@ public class AuthViewModel extends ViewModel {
                                     mutableLiveDataUser.setValue(user);
                                     token.setValue(user.token);
                                 },
-                                error -> {
-                                    mutableLiveDataError.setValue(error.getMessage());
-                                }
+                                error -> mutableLiveDataError.setValue(error.getMessage())
                         )
         );
     }

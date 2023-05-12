@@ -19,21 +19,19 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class AuthFragment extends Fragment {
 
-    private FragmentAuthBinding binding;
-    private AuthViewModel authViewModel;
     @Inject
     Api api;
+    private FragmentAuthBinding binding;
+    private AuthViewModel authViewModel;
 
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-
         authViewModel = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
         binding = FragmentAuthBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -69,10 +67,9 @@ public class AuthFragment extends Fragment {
     }
 
     private void showError() {
-        authViewModel.mutableLiveDataError.observe(getViewLifecycleOwner(), error -> {
-            Toast.makeText(getContext(), error, Toast.LENGTH_LONG)
-                    .show();
-        });
+        authViewModel.mutableLiveDataError.observe(getViewLifecycleOwner(), error ->
+                Toast.makeText(getContext(), error, Toast.LENGTH_LONG)
+                .show());
     }
 
     private void turnOnButtonNext() {

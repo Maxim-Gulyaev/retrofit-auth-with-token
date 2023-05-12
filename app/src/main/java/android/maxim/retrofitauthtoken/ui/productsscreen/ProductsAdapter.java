@@ -48,6 +48,4 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
             description = itemView.findViewById(R.id.tv_description);
         }
     }
-
-
 }
