@@ -26,7 +26,6 @@ public class AuthViewModel extends ViewModel {
     Api api;
     MutableLiveData<User> mutableLiveDataUser = new MutableLiveData<>();
     MutableLiveData<String> mutableLiveDataError = new MutableLiveData<>();
-    private static final String TAG = "ERROR";
 
     void auth(String username, String password) {
 
@@ -42,7 +41,6 @@ public class AuthViewModel extends ViewModel {
                                     token.setValue(user.token);
                                 },
                                 error -> {
-                                    Log.e(TAG, error.getMessage());
                                     mutableLiveDataError.setValue(error.getMessage());
                                 }
                         )
