@@ -70,6 +70,6 @@ public class ProductsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        compositeDisposable.dispose();
+        compositeDisposable.clear();
     }
 }
